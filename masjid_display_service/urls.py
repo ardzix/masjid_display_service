@@ -6,7 +6,8 @@ from rest_framework.permissions import AllowAny
 from django.contrib import admin
 from api.views import (
     MosqueViewSet, MosqueUserViewSet,
-    SliderViewSet, TextMarqueeViewSet, MasjidConfigurationViewSet
+    SliderViewSet, TextMarqueeViewSet, MasjidConfigurationViewSet,
+    SubscriptionViewSet
 )
 
 # Create a router and register viewsets
@@ -15,7 +16,8 @@ router.register(r'mosques', MosqueViewSet, basename='mosque')
 router.register(r'mosque-users', MosqueUserViewSet, basename='mosqueuser')
 router.register(r'sliders', SliderViewSet, basename='slider')
 router.register(r'text-marquees', TextMarqueeViewSet, basename='textmarquee')
-router.register(r'masjid-configurations', MasjidConfigurationViewSet, basename='masjidconfiguration')
+router.register(r'configurations', MasjidConfigurationViewSet, basename='masjidconfiguration')
+router.register(r'subscriptions', SubscriptionViewSet, basename='subscription')
 
 # Swagger Schema View
 schema_view = get_schema_view(

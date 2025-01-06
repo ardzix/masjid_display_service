@@ -8,7 +8,11 @@ class SSOAuthentication(JWTAuthentication):
         """
         Authenticate user based on sso_user_id from token.
         """
-        raw_token = self.get_raw_token(self.get_header(request))
+        header = self.get_header(request)
+        if header is None:
+            return None
+        
+        raw_token = self.get_raw_token(header)
         if not raw_token:
             return None
 

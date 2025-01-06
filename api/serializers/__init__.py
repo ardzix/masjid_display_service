@@ -82,4 +82,4 @@ class MosqueSerializer(serializers.ModelSerializer):
             'id', 'name', 'address', 'latitude', 'longitude', 'subscription',
             'subscription_expiry', 'created_at', 'mosque_users', 'devices'
         ]
-        read_only_fields = ['id', 'created_at']
+        read_only_fields = ['id', 'created_at', 'subscription', 'subscription_expiry']
