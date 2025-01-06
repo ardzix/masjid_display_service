@@ -5,6 +5,8 @@ from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.decorators import action
+from datetime import timedelta
+from django.utils.timezone import now
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import (
     Mosque, MosqueUser, Subscription, Device, Slider,
