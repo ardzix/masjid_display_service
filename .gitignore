@@ -36,10 +36,6 @@ src/
 
 .env
 
-# api
-api/migrations/*
-!api/migrations/__init__.py
-
 # personal notes
 tokens.md
 
