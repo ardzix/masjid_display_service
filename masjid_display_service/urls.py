@@ -7,17 +7,22 @@ from django.contrib import admin
 from api.views import (
     MosqueViewSet, MosqueUserViewSet,
     SliderViewSet, TextMarqueeViewSet, MasjidConfigurationViewSet,
-    SubscriptionViewSet
+    SubscriptionViewSet, DeviceViewSet
 )
+from api.views.tv import TVContentViewSet
+from common.views import FileViewSet
 
 # Create a router and register viewsets
 router = DefaultRouter()
-router.register(r'mosques', MosqueViewSet, basename='mosque')
-router.register(r'mosque-users', MosqueUserViewSet, basename='mosqueuser')
-router.register(r'sliders', SliderViewSet, basename='slider')
-router.register(r'text-marquees', TextMarqueeViewSet, basename='textmarquee')
-router.register(r'configurations', MasjidConfigurationViewSet, basename='masjidconfiguration')
-router.register(r'subscriptions', SubscriptionViewSet, basename='subscription')
+router.register(r'customer/mosques', MosqueViewSet, basename='mosque')
+router.register(r'customer/devices', DeviceViewSet, basename='device')
+router.register(r'customer/mosque-users', MosqueUserViewSet, basename='mosqueuser')
+router.register(r'customer/sliders', SliderViewSet, basename='slider')
+router.register(r'customer/text-marquees', TextMarqueeViewSet, basename='textmarquee')
+router.register(r'customer/configurations', MasjidConfigurationViewSet, basename='masjidconfiguration')
+router.register(r'customer/subscriptions', SubscriptionViewSet, basename='subscription')
+router.register(r'device/tv-content', TVContentViewSet, basename='tvcontent')
+router.register(r'common/file', FileViewSet, basename='file')
 
 # Swagger Schema View
 schema_view = get_schema_view(

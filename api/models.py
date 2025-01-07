@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from libs.storage import FILE_STORAGE
+from common.models import File
 import datetime
 
 
@@ -100,7 +101,7 @@ class Device(models.Model):
 # Slider Model
 class Slider(models.Model):
     mosque = models.ForeignKey(Mosque, on_delete=models.CASCADE, related_name="sliders")
-    background_image = models.FileField(storage=FILE_STORAGE, max_length=300, blank=True, null=True)
+    background_image = models.ForeignKey(File, on_delete=models.SET_NULL, blank=True, null=True)
     text = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -123,6 +124,7 @@ class PrayerTime(models.Model):
     mosque = models.ForeignKey(Mosque, on_delete=models.CASCADE, related_name="prayer_times")
     date = models.DateField()
     fajr = models.TimeField()
+    sunrise = models.TimeField()
     dhuhr = models.TimeField()
     asr = models.TimeField()
     maghrib = models.TimeField()

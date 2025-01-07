@@ -8,11 +8,11 @@ from rest_framework.decorators import action
 from datetime import timedelta
 from django.utils.timezone import now
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import (
+from ..models import (
     Mosque, MosqueUser, Subscription, Device, Slider,
     TextMarquee, MasjidConfiguration
 )
-from .serializers import (
+from ..serializers import (
     MosqueSerializer, MosqueUserSerializer, SubscriptionSerializer,
     DeviceSerializer, SliderSerializer, TextMarqueeSerializer,
     MasjidConfigurationSerializer
@@ -154,7 +154,7 @@ class MasjidConfigurationViewSet(BaseMosqueRelatedViewSet):
     serializer_class = MasjidConfigurationSerializer
 
 
-# Masjid Configuration ViewSet
+# Device ViewSet
 class DeviceViewSet(BaseMosqueRelatedViewSet):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer

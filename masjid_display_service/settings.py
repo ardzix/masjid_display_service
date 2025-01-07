@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'auditlog',
     'corsheaders',  # For handling CORS (optional)
     'api',  # Your new app
+    'common',  # Your new app
 ]
 
 
