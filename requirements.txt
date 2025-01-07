@@ -18,6 +18,8 @@ inflection==0.5.1
 jmespath==1.0.1
 packaging==24.2
 pillow==11.1.0
+psycopg2-binary
+pulsar-client
 pycparser==2.22
 PyJWT==2.10.1
 python-dateutil==2.9.0.post0
