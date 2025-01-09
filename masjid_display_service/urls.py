@@ -11,6 +11,7 @@ from api.views import (
 )
 from api.views.tv import TVContentViewSet
 from common.views import FileViewSet
+from api.views.home import homepage
 
 # Create a router and register viewsets
 router = DefaultRouter()
@@ -45,4 +46,5 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('admin/', admin.site.urls),
+    path('', homepage, name='homepage'),
 ]
