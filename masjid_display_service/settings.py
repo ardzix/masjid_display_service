@@ -198,3 +198,6 @@ SIMPLE_JWT = {
     'ALGORITHM': 'RS256',
     'VERIFYING_KEY': public_key,  # Validate tokens with this public key
 }
+
+
+CORS_ORIGIN_ALLOW_ALL = True
