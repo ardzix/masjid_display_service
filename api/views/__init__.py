@@ -42,6 +42,15 @@ class BaseMosqueRelatedViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['mosque']  # Ensure filtering by mosque is always required
 
+    mosque_param = openapi.Parameter(
+        "mosque",
+        openapi.IN_QUERY,
+        description="Filter by Mosque ID. Required for all operations.",
+        type=openapi.TYPE_INTEGER,
+        required=True,
+    )
+
+    @swagger_auto_schema(manual_parameters=[mosque_param])
     def get_queryset(self):
         """
         Restrict queryset to items linked to the current user's mosques and the specified mosque ID.
