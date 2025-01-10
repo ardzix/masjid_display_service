@@ -51,13 +51,22 @@ class BaseMosqueRelatedViewSet(ModelViewSet):
     )
 
     @swagger_auto_schema(manual_parameters=[mosque_param])
+    def list(self, request, *args, **kwargs):
+        """
+        List items filtered by Mosque ID.
+        """
+        return super().list(request, *args, **kwargs)
+
     def get_queryset(self):
         """
         Restrict queryset to items linked to the current user's mosques and the specified mosque ID.
         """
-        queryset = super().get_queryset().filter(
-            mosque__mosque_users__user=self.request.user
-        )
+        try:
+            queryset = super().get_queryset().filter(
+                mosque__mosque_users__user=self.request.user
+            )
+        except Exception as e:
+            raise PermissionDenied(str(e))
         mosque_id = self.request.query_params.get('mosque')
         if not mosque_id:
             raise PermissionDenied("The 'mosque' query parameter is required.")
