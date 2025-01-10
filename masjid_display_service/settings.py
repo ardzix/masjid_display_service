@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -198,3 +199,6 @@ SIMPLE_JWT = {
     'ALGORITHM': 'RS256',
     'VERIFYING_KEY': public_key,  # Validate tokens with this public key
 }
+
+
+CORS_ORIGIN_ALLOW_ALL = True
