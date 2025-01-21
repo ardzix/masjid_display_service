@@ -42,17 +42,41 @@ class BaseMosqueRelatedViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['mosque']  # Ensure filtering by mosque is always required
 
+    # Generate the list of filter parameters statically
+    mosque_filter_parameters = [
+        openapi.Parameter(
+            name='mosque',
+            in_=openapi.IN_QUERY,
+            description='Filter by Mosque ID (Required)',
+            type=openapi.TYPE_INTEGER,
+            required=True,
+        )
+    ]
+
+    @swagger_auto_schema(manual_parameters=mosque_filter_parameters)
+    def list(self, request, *args, **kwargs):
+        """
+        List items filtered by query parameters.
+        """
+        return super().list(request, *args, **kwargs)
+    
     def get_queryset(self):
         """
         Restrict queryset to items linked to the current user's mosques and the specified mosque ID.
         """
+        # Handle the case where the user is Anonymous (e.g., when accessing Swagger)
+        if not self.request or not self.request.user.is_authenticated:
+            return super().get_queryset().none()
+        
         queryset = super().get_queryset().filter(
             mosque__mosque_users__user=self.request.user
         )
-        mosque_id = self.request.query_params.get('mosque')
-        if not mosque_id:
-            raise PermissionDenied("The 'mosque' query parameter is required.")
-        return queryset.filter(mosque_id=mosque_id)
+        if self.action == 'list':
+            mosque_id = self.request.query_params.get('mosque')
+            if not mosque_id:
+                raise PermissionDenied("The 'mosque' query parameter is required.")
+            return queryset.filter(mosque_id=mosque_id)
+        return queryset
 
     def perform_create(self, serializer):
         """
@@ -74,6 +98,10 @@ class MosqueViewSet(ModelViewSet):
         """
         Restrict queryset to mosques linked to the current user.
         """
+        # Handle the case where the user is Anonymous (e.g., when accessing Swagger)
+        if not self.request or not self.request.user.is_authenticated:
+            return super().get_queryset().none()
+        
         return Mosque.objects.filter(mosque_users__user=self.request.user)
 
     def perform_create(self, serializer):
