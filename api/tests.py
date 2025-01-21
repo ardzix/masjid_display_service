@@ -3,7 +3,7 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 from datetime import timedelta
 from django.utils.timezone import now
-from .models import Mosque, Subscription, MosqueUser, Slider, TextMarquee, Device, MasjidConfiguration
+from .models import Mosque, Subscription, MosqueUser, Slider, TextMarquee, Device, MasjidConfiguration, User
 
 class MasjidDisplayServiceTests(APITestCase):
     @classmethod
@@ -39,15 +39,9 @@ class MasjidDisplayServiceTests(APITestCase):
             longitude=0.0,
         )
 
-        MosqueUser.objects.create(
-            user_id=1,  # Example SSO user ID
-            mosque=self.mosque,
-            role="admin"
-        )
-
         self.slider = Slider.objects.create(
             mosque=self.mosque,
-            background_image="slider_image.jpg",
+            # background_image="slider_image.jpg",
             text="Welcome to the Mosque"
         )
 
