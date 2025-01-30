@@ -8,22 +8,19 @@ from ..models import File
 class FileSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
     file_size = serializers.SerializerMethodField()
-    created_by_email = serializers.SerializerMethodField()
 
     class Meta:
         model = File
-        fields = ("id", "name", "file", "url", "file_size", "description", "created_at", "created_by", "created_by_email")
+        fields = ("id", "name", "file", "url", "file_size", "description")
 
     def get_url(self, instance):
         return instance.file.url if instance.file else "-"
-    
+
     def get_file_size(self, instance):
         if instance.file and instance.file.size:
             return instance.file.size  # Size in bytes
         return None
 
-    def get_created_by_email(self, instance):
-        return instance.created_by.email
 
 class FileLiteSerializer(FileSerializer):
 
@@ -54,12 +51,13 @@ class FileCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = File
-        fields = ("id", "name", "url", "file_size", "file_base64", "description")
+        fields = ("id", "name", "url", "file_size",
+                  "file_base64", "description")
         read_only_fields = ["id"]
 
     def get_url(self, instance):
         return instance.file.url if instance.file else "-"
-    
+
     def get_file_size(self, instance):
         if instance.file and instance.file.size:
             return instance.file.size  # Size in bytes
@@ -82,5 +80,6 @@ class SetFileSerializer(serializers.Serializer):
         data = decode_base64_img(encoded_file)
 
         # Create File instance
-        file_instance = File.objects.create(name=data.name, file=data, created_by=user)
+        file_instance = File.objects.create(
+            name=data.name, file=data, created_by=user)
         return file_instance

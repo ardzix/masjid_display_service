@@ -38,8 +38,9 @@ class SliderSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['background_image'] = FileLiteSerializer(
-            instance.background_image).data
+        if instance.background_image:
+            representation['background_image'] = FileLiteSerializer(
+                instance.background_image).data
         return representation
 
     class Meta:
