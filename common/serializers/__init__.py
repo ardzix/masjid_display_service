@@ -25,16 +25,11 @@ class FileSerializer(serializers.ModelSerializer):
     def get_created_by_email(self, instance):
         return instance.created_by.email
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation['created_by'] = f'{instance.created_by.first_name} {instance.created_by.last_name}'
-        return representation
-    
 class FileLiteSerializer(FileSerializer):
 
     class Meta:
         model = File
-        fields = ("id", "name", "url", "file_size", "created_at", "created_by", "created_by_email")
+        fields = ("id", "name", "url", "file_size")
 
 
 def decode_base64_img(encoded_file, name="temp"):

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from common.serializers import FileLiteSerializer
 from ..models import (
     User, Mosque, MosqueUser, Subscription,
     Device, Slider, TextMarquee, PrayerTime, MasjidConfiguration
@@ -34,6 +35,13 @@ class DeviceSerializer(serializers.ModelSerializer):
 
 # Slider Serializer
 class SliderSerializer(serializers.ModelSerializer):
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['background_image'] = FileLiteSerializer(
+            instance.background_image).data
+        return representation
+
     class Meta:
         model = Slider
         fields = ['id', 'mosque', 'background_image', 'text', 'created_at']
