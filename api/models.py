@@ -131,7 +131,7 @@ class PrayerTime(models.Model):
     sunset = models.TimeField()
     maghrib = models.TimeField()
     isha = models.TimeField()
-    midight = models.TimeField()
+    midnight = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 
