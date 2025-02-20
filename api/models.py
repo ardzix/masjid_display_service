@@ -123,12 +123,15 @@ class TextMarquee(models.Model):
 class PrayerTime(models.Model):
     mosque = models.ForeignKey(Mosque, on_delete=models.CASCADE, related_name="prayer_times")
     date = models.DateField()
+    imsak = models.TimeField()
     fajr = models.TimeField()
     sunrise = models.TimeField()
     dhuhr = models.TimeField()
     asr = models.TimeField()
+    sunset = models.TimeField()
     maghrib = models.TimeField()
     isha = models.TimeField()
+    midight = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 
