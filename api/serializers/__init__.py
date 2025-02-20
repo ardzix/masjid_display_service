@@ -106,7 +106,7 @@ class MosqueSerializer(serializers.ModelSerializer):
 class PrayerScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrayerTime
-        fields = ['date', 'fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha']
+        fields = ['date', 'imsak', 'fajr', 'sunrise', 'dhuhr', 'asr', 'sunset', 'maghrib', 'isha', 'midight']
 
 
 class MosqueDetailSerializer(serializers.ModelSerializer):
