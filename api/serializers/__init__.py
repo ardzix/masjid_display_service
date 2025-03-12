@@ -82,8 +82,10 @@ class MasjidConfigurationSerializer(serializers.ModelSerializer):
     class Meta:
         model = MasjidConfiguration
         fields = ['id', 'mosque', 'max_sliders', 'max_text_marquee',
-                  'prayer_duration_days', 'allow_calendar_access', 'created_at']
-        read_only_fields = ['id', 'created_at']
+                  'theme', 'adzan_popup_duration', 'iqomah_popup_duration',
+                  'khutbah_popup_duration', 'slide_duration', 'slide_scroll_duration',
+                  'prayer_duration_days', 'allow_calendar_access', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
 
 
 # Mosque Serializer

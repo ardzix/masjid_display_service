@@ -1,6 +1,7 @@
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
 from libs.storage import FILE_STORAGE
 from common.models import File
 import datetime
@@ -137,12 +138,25 @@ class PrayerTime(models.Model):
 
 # Masjid Configuration Model
 class MasjidConfiguration(models.Model):
+    THEME_CHOICES = (
+        ("green", _("Green")),
+        ("red", _("Red")),
+        ("blue", _("Blue")),
+        ("yellow", _("Yellow")),
+    )
     mosque = models.OneToOneField(Mosque, on_delete=models.CASCADE, related_name="configuration")
     max_sliders = models.IntegerField(default=5)
     max_text_marquee = models.IntegerField(default=3)
     prayer_duration_days = models.IntegerField(default=30)  # Number of days prayer times will be generated
     allow_calendar_access = models.BooleanField(default=False)
+    theme = models.CharField(max_length=10, default='green', choices=THEME_CHOICES)
+    adzan_popup_duration = models.PositiveIntegerField(default=600)
+    iqomah_popup_duration = models.PositiveIntegerField(default=600)
+    khutbah_popup_duration = models.PositiveIntegerField(default=2700)
+    slide_duration = models.PositiveIntegerField(default=5)
+    slide_scroll_duration = models.PositiveIntegerField(default=7)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 from auditlog.registry import auditlog
 
