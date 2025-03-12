@@ -1,5 +1,7 @@
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from libs.storage import FILE_STORAGE
@@ -169,3 +171,9 @@ auditlog.register(Slider)
 auditlog.register(TextMarquee)
 auditlog.register(PrayerTime)
 auditlog.register(MasjidConfiguration)
+
+# Signal
+@receiver(post_save, sender=Mosque)
+def create_masjid_configuration(sender, instance, created, **kwargs):
+    if created:
+        MasjidConfiguration.objects.create(mosque=instance)
