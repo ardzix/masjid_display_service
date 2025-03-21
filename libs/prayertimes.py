@@ -63,3 +63,46 @@ class ShalatSchedule:
             current_date += timedelta(days=1)
 
         return schedule
+    
+
+def bulk_create_prayer_times(mosque_id, shalat_times):
+    """
+    Bulk create PrayerTime records from the shalat_times list.
+
+    :param mosque_id: The ID of the mosque.
+    :param shalat_times: A list of dictionaries containing prayer times.
+    """
+    from api.models import Mosque, PrayerTime
+    from datetime import datetime
+    mosque = Mosque.objects.get(id=mosque_id)  # Fetch the mosque instance
+
+    prayer_times_objects = [
+        PrayerTime(
+            mosque=mosque,
+            date=datetime.strptime(day["date"], "%Y-%m-%d").date(),
+            imsak=datetime.strptime(day["fajr"], "%H:%M").time(),  # Using Fajr as Imsak
+            fajr=datetime.strptime(day["fajr"], "%H:%M").time(),
+            sunrise=datetime.strptime(day["sunrise"], "%H:%M").time(),
+            dhuhr=datetime.strptime(day["dhuhr"], "%H:%M").time(),
+            asr=datetime.strptime(day["asr"], "%H:%M").time(),
+            sunset=datetime.strptime(day["maghrib"], "%H:%M").time(),  # Assuming sunset is the same as Maghrib
+            maghrib=datetime.strptime(day["maghrib"], "%H:%M").time(),
+            isha=datetime.strptime(day["isha"], "%H:%M").time(),
+            midnight=datetime.strptime(day["isha"], "%H:%M").time()  # Assuming Midnight is the same as Isha
+        )
+        for day in shalat_times
+    ]
+
+    # Bulk create prayer times
+    PrayerTime.objects.bulk_create(prayer_times_objects)
+
+    print(f"✅ Successfully inserted {len(prayer_times_objects)} prayer times for mosque {mosque.name}")
+
+
+
+def run(mosque_id, months=1):
+    from api.models import Mosque, PrayerTime
+    mosque = Mosque.objects.get(pk=mosque_id)
+    schedule = ShalatSchedule(mosque.latitude, mosque.longitude)
+    schedule_data = schedule.get_schedule(months, 7)
+    bulk_create_prayer_times(mosque_id, schedule_data)
