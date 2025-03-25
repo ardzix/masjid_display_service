@@ -52,6 +52,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):
     list_display = ('mosque', 'background_image', 'text', 'created_at')
+    list_filter = ('mosque',)
     search_fields = ('mosque__name', 'text')
 
 
@@ -59,6 +60,7 @@ class SliderAdmin(admin.ModelAdmin):
 @admin.register(TextMarquee)
 class TextMarqueeAdmin(admin.ModelAdmin):
     list_display = ('mosque', 'text', 'created_at')
+    list_filter = ('mosque',)
     search_fields = ('mosque__name', 'text')
 
 
@@ -74,4 +76,5 @@ class PrayerTimeAdmin(admin.ModelAdmin):
 @admin.register(MasjidConfiguration)
 class MasjidConfigurationAdmin(admin.ModelAdmin):
     list_display = ('mosque', 'max_sliders', 'max_text_marquee', 'prayer_duration_days', 'allow_calendar_access', 'created_at')
+    list_filter = ('mosque',)
     search_fields = ('mosque__name',)

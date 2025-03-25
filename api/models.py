@@ -137,6 +137,9 @@ class PrayerTime(models.Model):
     midnight = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.mosque} on {self.date}"
+
 
 # Masjid Configuration Model
 class MasjidConfiguration(models.Model):
